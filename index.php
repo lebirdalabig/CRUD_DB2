@@ -6,6 +6,8 @@
   <link rel="stylesheet" href="css/bootstrap.min.css" >
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
 <style>
 body {
@@ -84,32 +86,35 @@ body {
       </thead>
       <tbody>
         <?php
-        	// Read through file line by line
-			$file = new SplFileObject("newfile.txt");
-			while (!$file->eof()) {
-			    echo $file->current();
-			    $file->next();
-			}
+        	 $myfile = fopen("newfile.txt", "a+") or die("Unable to open file!");
+            $lines = file("newfile.txt");
+
+            foreach($lines as $line)
+            {
+                echo nl2br($line);
+
               echo "<tr>";
-              echo  "<td>".$lines."</td>
-                <td>".$lines."</td>
-                <td>".$lines."</td>
-                <td>".$lines."</td> 
+              echo  "<td>".$line."</td>
+                <td>".$line."</td>
+                <td>".$line."</td>
+                <td>".$line."</td> 
                 <td>
 				
-				  <button type='button' class='btn' onclick='setVal(".$lines.");' data-toggle='modal' data-target='#updateModal'  .style.display='block'\>
+				  <button type='button' class='btn' onclick='setVal(".$line.");' data-toggle='modal' data-target='#updateModal'  .style.display='block'\>
                     <span class='glyphicon glyphicon-cog'></span> 
                   </button>
 
 				  
                 </td>
                 <td>
-                  <a href=delete.php><button type='button' class='btn' .style.display='block'\">
-                    <span class='glyphicon glyphicon-cog'></span> 
+                  <a href='delete.php/index/.$line.'><button type='button' class='btn' .style.display='block'\">
+                    <span class='glyphicon glyphicon-cog'>$line</span> 
                   </button></a>
-                </td>             
-              ";
+                </td>"
+                ;
               echo "</tr>";
+            }
+            fclose($myfile);
           ?> 
       </tbody>
       </table>
@@ -183,30 +188,29 @@ body {
                     <h4 class='modal-title'>Modal Header</h4>
                   </div>
                   <div class='container'>
-                  <form method = 'POST' class='form-horizontal' action='<?php echo site_url('admin/updateMovie')?>'>
+                  <form method = 'POST' class='form-horizontal' action='update.php'>
                     <div class='form-group'>
-					             <input id="val" type="hidden" name="movie_id" value="">
                     <label class='control-label col-sm-2' for='email'>Movie Title:</label>
                     <div class='col-sm-3'>
-                      <input type='text' class='form-control' name="movie_title" placeholder="Title">
+                      <input type='text' class='form-control' name="one" placeholder=<?php $line ?>>
                     </div>
                     </div>
                     <div class='form-group'>
                     <label class='control-label col-sm-2' for='address'>Movie Description:</label>
                     <div class='col-sm-3'>
-                      <input type='text' class='form-control' name="movie_desc" placeholder="Description">
+                      <input type='text' class='form-control' name="two" placeholder="Description">
                     </div>
                     </div>
                     <div class='form-group'>
                     <label class='control-label col-sm-2' for='email'>Movie Year:</label>
                     <div class='col-sm-3'>
-                      <input type='text' class='form-control' name="movie_year" placeholder="Year">
+                      <input type='text' class='form-control' name="three" placeholder="Year">
                     </div>
                     </div>
                     <div class='form-group'>
                     <label class='control-label col-sm-2' for='email'>Movie Rating:</label>
                     <div class='col-sm-3'>
-                      <input type='text' class='form-control' name="movie_rating" placeholder="Rating">
+                      <input type='text' class='form-control' name="four" placeholder="Rating">
                     </div>
                     </div>
                 
